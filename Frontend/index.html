@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Blue Lock | Store</title>
+</head>
+<body>
+    <header class="navbar">
+    <div class="header-content">
+        <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+        <nav>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                <li><a href="">Produtos</a></li>
+                <li><a href="conta.html">Conta</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icon">
+            <img src="static/image/cart.png" alt="Carrinho de compras">
+            <img src="static/image/menu.png" alt="menu" class="menu-button">
+        </div>
+    </div>
+    </header>
+    <div class="slider">
+        <div class="slides">
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">         
+            <div class="slide first">
+                <img src="static/image/teste_slide_1-transformed.png" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="static/image/Teste slide 2.png" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="static/image/banner_3_low-transformedhigh.png" alt="Slide 3">
+            </div>
+            <div class="navigation-auto">
+                <div class="auto-btn1"></div>
+                <div class="auto-btn2"></div>
+                <div class="auto-btn3"></div>
+            </div>
+        </div>
+        <div class="manual-navigation">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>      
+        </div>
+    </div>
+
+    <main>
+    <h1>Lançamentos: </h1>
+    <div class="container">
+        <div class="white-box">
+            <div class="items" id="product-list">
+                <!-- Products will be injected here by JavaScript -->
+            </div>
+        </div>
+    </div>
+    <script>
+        // Fetch the product data from your Django API
+        fetch('/products/products/')
+            .then(response => response.json())
+            .then(products => {
+                const productList = document.getElementById('product-list');
+
+                products.forEach(product => {
+                    // Create a new div element for each product
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'item';
+
+                    itemDiv.innerHTML = `
+                        <div class="product new">
+                            <img src="static/image/${product.image}" alt="${product.name}">
+                            <div class="sell">Novo</div>
+                        </div>
+                        <h3>${product.name}</h3>
+                        <span>R$ ${product.price}</span>
+                        <button onclick="window.location.href='/adicionar_carrinho/${product.id}/'">Adicionar ao Carrinho</button>
+                        <button onclick="window.location.href='/comprar/${product.id}/'">Comprar &#8594;</button>
+                    `;
+
+                    // Append the new product element to the product list
+                    productList.appendChild(itemDiv);
+                });
+            })
+            .catch(error => console.error('Error fetching products:', error));
+    </script>
+    </main> 
+    <footer class="gray-background">
+        <div class="page-inner-content footer-content">
+            <div class="logo-footer">
+                <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente. </p>
+            </div>
+            <div class="links-footer" id="final">
+                <h3>Contatos</h3>
+                <ul class="contact-list">
+                    <li> <img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
+                    <li><img src="static/image/icon linkedin.svg" alt="Linkedin icon"><a href="https://www.linkedin.com/in/adriel-leite-15080224a/">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="page-inner-content">
+        <div class="page-inner-content copyright">
+            <p>Copyright 2024  - Todos Direitos Reservados.</p>
+        </div>
+    </footer>
+    
+    
+    <script src="static/script.js"></script>
+</body>
+</html>

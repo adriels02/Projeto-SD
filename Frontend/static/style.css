@@ -1,0 +1,547 @@
+@font-face {
+  font-family: "blue";
+  src: url("Blue.ttf") format("truetype");
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header-content {
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+header {
+  background-color: #2c2c2c;
+  position: sticky;
+  padding: 1rem;
+  top: 0;
+  box-shadow: 10px 0px 10px #2c2c2c;
+  z-index: 99;
+}
+header > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.logo {
+  font-family: "blue", sans-serif;
+}
+.logo a{
+  cursor: pointer;
+  color: #00008b;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #fff;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+.nav-icon {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon img {
+  width: 30px;
+  cursor: pointer;
+}
+.nav-icon img child {
+  margin-right: 1rem;
+}
+nav ul li {
+  color: #fff;
+  margin-right: 1.5rem;
+  cursor: pointer;
+}
+
+nav ul li :hover {
+  transform: translateY(-5px);
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.menu-button {
+  display: none;
+}
+
+nav a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.slider {
+  margin: 20px auto;
+  width: 800px;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+.slides {
+  width: 400%;
+  height: 400px;
+  display: flex;
+}
+
+.slides input {
+  display: none;
+}
+.slide {
+  width: 25%;
+  position: relative;
+  transition: 2s;
+}
+.slide img {
+  width: 800px;
+}
+
+@media (max-width: 800px){
+  .slider{
+    width: 400px;
+    height: 200px;
+  }
+
+  .manual-btn{
+    display: none;
+  }
+
+  .navigation-auto div{
+    display: none;
+  }
+
+  .slide img{
+    width: 400px;
+  }
+
+}
+.manual-navigation {
+  position: absolute;
+  width: 800px;
+  margin-top: -40px;
+  display: flex;
+  justify-content: center;
+}
+.manual-btn {
+  border: 2px solid #fff;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+
+.manual-btn:not(:last-child) {
+  margin-right: 36px;
+}
+
+.manual-btn:hover {
+  background-color: #fff;
+}
+
+#radio1:checked ~ .first {
+  margin-left: 0;
+}
+#radio2:checked ~ .first {
+  margin-left: -25%;
+}
+#radio3:checked ~ .first {
+  margin-left: -50%;
+}
+
+.navigation-auto div {
+  border: 2px solid #00008b;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 1s;
+}
+.navigation-auto {
+  position: absolute;
+  width: 800px;
+  margin-top: 360px;
+  display: flex;
+  justify-content: center;
+}
+.navigation-auto div:not(:last-child) {
+  margin-right: 40px;
+}
+#radio1:checked ~ .navigation-auto .auto-btn1 {
+  background-color: #fff;
+}
+#radio2:checked ~ .navigation-auto .auto-btn2 {
+  background-color: #fff;
+}
+#radio3:checked ~ .navigation-auto .auto-btn3 {
+  background-color: #fff;
+}
+
+main h1{
+  text-align: left;
+  margin-left: 14%;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-family: "blue", sans-serif;
+}
+
+@media (max-width: 800px) {
+  .logo {
+    font-size: 1.2rem;
+  }
+  .menu-button {
+    display: block;
+  }
+  nav {
+    position: absolute;
+    background-color: #2c2c2c;
+    width: 100%;
+    top: 46px;
+    display: none;
+  }
+  .show-menu nav {
+    display: block;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    text-align: center;
+    padding: 0.8rem;
+  }
+  .nav-icon img {
+    margin-right: 1rem;
+  }
+
+  main h1{
+    margin-left: 0px;
+  }
+ 
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: auto;
+}
+
+.white-box{
+    background-color: #2c2c2c;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 6px 6px 22px 2px #000000;
+}
+
+.items{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+}
+
+.item{
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.product{
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    height: 220px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.product.new .sell{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: orangered;
+  color: #fff;
+  padding: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.item img{
+    margin-top: 10px;
+    height: 90%;
+}
+
+.item h3{
+  margin: 0;
+  color: #000000;
+  font-size: 1.2rem;
+  margin: 10px 0px 10px 0px;
+}
+
+.item span{
+  color: #000000;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.item button{
+  background-color: #00008b;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+main span{
+  text-align: center;
+}
+@media (max-width: 680px) {
+  .items{
+    display: block;
+  }
+
+  .item{
+    margin-bottom: 20px;
+  }
+  .container{
+    height: auto;
+  }
+  
+}
+footer{
+  background-color: #2c2c2c;
+}
+
+.footer-content{
+  display:flex;
+  align-items: center;
+  color:#ffffff;
+  padding: 4rem 5rem;
+  gap: 2rem;
+
+}
+
+.links-footer h3{
+  color: white;
+  margin-bottom: 0.8rem;
+
+}
+.links-footer ul{
+  list-style: none;
+  
+}
+
+.links-footer ul li{
+    margin-bottom: 0.5rem;
+  } 
+  
+  .links-footer a{
+    cursor: pointer
+    
+}
+
+
+.copyright{
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+}
+.contact-list li img {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@media (max-width: 800px){
+  .footer-content{
+    display: inline;
+    font-size: 0.8 rem;
+
+  }
+
+  .footer-content>div{
+    padding: 1rem;
+  }
+
+  .copyright{
+    font-size: 0.8rem
+  }
+
+
+}
+  .logo-footer{
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .logo-footer h1{
+    
+    margin-bottom: 30px;
+  }
+  
+  .links-footer{
+    margin-left: 30%;
+  }
+  
+  .contact-list a{
+    color: #00008b;
+    
+  }
+ 
+  .formularios{
+    justify-content: start;
+    align-items: baseline;
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding: 30px;
+    display: flex;
+    color: #fff;
+  }
+  
+  .logar{
+    margin-right: 40px;
+    position: relative;
+    width: 300px;
+    height: 340px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255 , .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(15px);
+
+  }
+
+  .logar h1{
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+
+  }
+
+  .registrar{
+    margin-right: 40px;
+    position: relative;
+    width: 300px;
+    height: 800px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255 , .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(15px);
+
+  }
+
+  .registrar h1{
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+
+  }
+
+
+
+
+
+  .input-box{
+    position: relative;
+    width: 210px;
+    margin: 30px 0;
+    border-bottom: 2px solid #fff;
+  }
+  
+  .input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-180%);
+    font-size: 1em;
+    color: white;
+    pointer-events: none;
+  }
+
+  .input-box input{
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #fff;
+    padding: 0 8px 0 5px;
+  }
+
+  .esqueceu-senha{
+    margin: -15px 0 15px;
+    font-size: .9rem;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .esqueceu-senha a{
+    color: #fff;
+    text-decoration: none;
+    text-align: end;
+  }
+
+  .button{
+    background-color: #fff;
+    height: 40px;
+    width: 100%;
+    border: none;
+    border-radius: 40px;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #000000;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 800px){
+    
+    .logar h1{
+      font-size: 25px;
+      margin-right: 0;
+    }
+    .registrar h1{
+      font-size: 25px;
+      margin-top: 30px;
+      margin-left: 0;
+    }
+    .formularios{
+      display: grid;
+      grid-gap: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    object-fit: cover; 
+  }

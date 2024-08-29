@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  usuarios:
+    build:
+      context: ./modulo_gestao_usuarios/gestao_usuarios
+    image: modulo_gestao
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./modulo_gestao_usuarios/gestao_usuarios:/app
+    
+     
+  
+  nginx:
+    image: my-nginx-image2
+    ports:
+      - "9090:80"
+    volumes:
+      - ../Frontend:/usr/share/nginx/html
+    
+
+  carrinho:
+    build:
+      context: ./modulo_carrinho/carrinho
+    image: modulo_carrinho
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./modulo_carrinho/carrinho:/app
+    depends_on:
+      - nginx
+
+  notificacao:
+    build:
+      context: ./modulo_notificacao/notificacao
+    image: modulo_notificacao
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./modulo_notificacao/notificacao:/app
+    depends_on:
+      - nginx
+  
+  pagamento:
+    build:
+      context: ./modulo_pagamento/pagamento
+    image: modulo_pagamento
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./modulo_pagamento/pagamento:/app
+    depends_on:
+      - nginx
+
+  produtos:
+    build:
+      context: ./modulo_produtos/produtos
+    image: modulo_produtos
+    ports:
+      - "8004:8000"
+    volumes:
+      - ./modulo_produtos/produtos:/app
+    depends_on:
+      - nginx
