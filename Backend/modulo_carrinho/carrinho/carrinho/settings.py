@@ -17,6 +17,10 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+DATABASE_ROUTERS = ['carrinho.db_routers.CompraProdutoRouter',
+                   'carrinho.db_routers.AppDatabaseRouter']
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -39,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'carrinho',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +83,8 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
+    os.path.abspath(os.path.join(
+        BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
 ]
 
 WSGI_APPLICATION = 'carrinho.wsgi.application'
@@ -86,10 +93,28 @@ WSGI_APPLICATION = 'carrinho.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
+# project_name/settings.py
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Banco de dados principal, se houver
+    },
+    'carrinho': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'modulo_produtos/produtos/db.sqlite3',
+    },
+    'produtos': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'modulo_produtos/gestao_usuarios/db.sqlite3',
     }
 }
 

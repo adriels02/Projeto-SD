@@ -1,30 +1,45 @@
+from django.shortcuts import render, get_object_or_404
+from produtos.models import Product
 from django.http import JsonResponse
-from django.db import connection
-from django.db.migrations.executor import MigrationExecutor
-from django.db.utils import OperationalError
+from django.shortcuts import render
+from .models import Compra
 
-def status_check(request):
-    status = {
-        "database": "Unknown",
-        "migrations_pending": "Unknown",
-        "status": "OK"
-    }
 
-    # Verificação da Conexão com o Banco de Dados
-    try:
-        connection.ensure_connection()
-        status["database"] = "Connected"
-    except OperationalError:
-        status["database"] = "Not Connected"
-        status["status"] = "ERROR"
 
-    # Verificação de Migrações Pendentes
-    try:
-        executor = MigrationExecutor(connection)
-        targets = executor.loader.graph.leaf_nodes()
-        status["migrations_pending"] = "No Pending Migrations" if not executor.migration_plan(targets) else "Pending Migrations"
-    except Exception as e:
-        status["migrations_pending"] = f"Error: {str(e)}"
-        status["status"] = "ERROR"
+def carrinho_view(request):
+    # Obtém todos os itens do carrinho
+    itens = Compra.objects.all()
 
-    return JsonResponse(status)
+    # Calcula o total
+    total_preco = sum(item.price * item.quantidade for item in itens)
+
+    return render(request, 'carrinho.html', {
+        'itens': itens,
+        'total_preco': total_preco,
+    })
+
+
+def adicionar_ao_carrinho(request, produto_id):
+    if request.method == 'POST':
+        produto = get_object_or_404(Product, id=produto_id)
+
+        # Suponha que o email do cliente seja passado na requisição
+        email_cliente = request.POST.get('email_cliente', '')
+
+        compra = Compra(
+            produto_id_externo=produto.id,
+            name=produto.name,
+            price=produto.price,
+            image=produto.image,
+            quantidade=1,  # Você pode ajustar a quantidade conforme necessário
+            email_cliente=email_cliente
+        )
+        compra.save()
+
+        return JsonResponse({'status': 'success', 'message': 'Produto adicionado ao carrinho'})
+    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
+
+
+def contar_produtos(request):
+    count = Compra.objects.count()  # Contar o número de itens no carrinho
+    return JsonResponse({'count': count})
