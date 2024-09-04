@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Lock | Store</title>
+    
+</head>
+<body>
+
+    <style>
+        .item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 2rem auto; 
+            background-color: #fff;
+        }
+
+        .item h2 {
+            background-color: #00008b;
+            color: #ddd;
+            padding: 1rem;
+            font-size: 1.25rem;
+            text-align: center;
+            margin: 0;
+        }
+
+        .comprar {
+            margin-left: 370px;
+        }
+
+        #product-info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        #product-info img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        #product-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        
+        .finalizar-compra {
+            display: block;
+            width: 200px;
+            margin: 1rem auto;
+            padding: 0.75rem;
+            font-size: 1.1rem;
+            color: #fff;
+            background-color: #00008b;
+            border: none;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .finalizar-compra:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <header class="navbar">
+        <div class="header-content">
+            <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                    <li><a href="">Produtos</a></li>
+                    <li><a href="conta.html">Conta</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icon">
+                <img src="static/image/cart.png" alt="Carrinho de compras">
+                <img src="static/image/menu.png" alt="menu" class="menu-button">
+            </div>
+        </div>
+    </header>
+
+    <main class="purchase-page">
+        <h1 class="comprar">Comprar Produto</h1>
+
+        <div class="container">
+            <div class="item">
+                <h2>Detalhes do Produto</h2>
+                <div id="product-info">
+                    <!-- Informações do produto serão inseridas aqui pelo JavaScript -->
+                </div>
+                <a href="/finalizar-compra" class="finalizar-compra">Finalizar Compra</a>
+            </div>
+        </div>
+     
+    </main>
+
+    <footer class="gray-background">
+        <div class="page-inner-content footer-content">
+            <div class="logo-footer">
+                <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente. </p>
+            </div>
+            <div class="links-footer" id="final">
+                <h3>Contatos</h3>
+                <ul class="contact-list">
+                    <li> <img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
+                    <li><img src="static/image/icon linkedin.svg" alt="Linkedin icon"><a href="https://www.linkedin.com/in/adriel-leite-15080224a/">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="page-inner-content">
+        <div class="page-inner-content copyright">
+            <p>Copyright 2024  - Todos Direitos Reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ajuste a URL para a rota que fornece os dados do produto
+            fetch('/payment/')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Erro ao obter informações do produto:', data.error);
+                        return;
+                    }
+
+                    // Atualiza o conteúdo da página com as informações do produto
+                    document.getElementById('product-info').innerHTML = `
+                        <h3>${data.name}</h3>
+                        <img src="static/image/${data.image_url}" alt="${data.name}" style="width: 200px;">
+                        <p>Descrição: ${data.description || 'Não disponível'}</p>
+                        <p>Preço Unitário: R$ ${parseFloat(data.price).toFixed(2)}</p>
+                    `;
+
+                    document.getElementById('product-id').value = data.id || '';
+                    document.getElementById('total-price').textContent = `Preço Total: R$ ${parseFloat(data.price).toFixed(2)}`;
+                })
+                .catch(error => console.error('Erro ao carregar os dados do produto:', error));
+        });
+    </script>
+</body>
+</html>

@@ -16,7 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('payment/produto/<int:product_id>/', views.redirect_to_comprar, name='redirect_to_comprar'),
+    path('finalizar_compra/', views.finalizar_compra_page, name='finalizar_compra_page'),
+    path('payment/', views.comprar_view, name='comprar_view'),
 ]
+
+

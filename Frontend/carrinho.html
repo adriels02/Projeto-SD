@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="static/image/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <title>Contas | Blue Lock</title>
+</head>
+
+<body>
+
+    <style>
+        .main-carrinho {
+            padding: 20px;
+        }
+        .main-carrinho h1 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .carrinho-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .carrinho-table th, .carrinho-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .carrinho-table th {
+            background-color: #f4f4f4;
+        }
+        .total {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+
+    <header class="navbar">
+        <div class="header-content">
+            <h1 class="logo"><a href="index.html">Blue<span>Lock</span></a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                    <li><a href="index.html">Produtos</a></li>
+                    <li><a href="conta.html">Conta</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-icon">
+                <button><img src="static/image/cart.png" alt="Bag Icon" style="width: 24px; height: 24px;"></button>
+
+                <img src="static/image/menu.png" alt="menu" class="menu-button">
+            </div>
+
+        </div>
+    </header>
+
+    <div class="main-carrinho">
+        <h1>Seu Carrinho</h1>
+        <table class="carrinho-table">
+            <thead>
+                <tr>
+                    <th>Imagem</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+        <div class="total">
+            <strong>Total Geral: R$ 0,00</strong>
+        </div>
+    </div>
+
+    <footer class="gray-background">
+        <div class="page-inner-content footer-content">
+            <div class="logo-footer">
+                <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente. </p>
+            </div>
+            <div class="links-footer" id="final">
+                <h3>Contatos</h3>
+                <ul class="contact-list">
+                    <li> <img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
+                    <li><img src="static/image/icon linkedin.svg" alt="Linkedin icon"><a href="https://www.linkedin.com/in/adriel-leite-15080224a/">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="page-inner-content">
+        <div class="page-inner-content copyright">
+            <p>ADS - IFPE Campus Paulista - 2024</p>
+        </div>
+    </footer>
+    
+    <script>
+        fetch('/cart/')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const itens = data.itens;
+            const totalPreco = data.total_preco;
+
+            let tabelaItens = '';
+            itens.forEach(item => {
+                tabelaItens += `
+                    <tr>
+                        <td><img src="static/image/${item.image_url}" alt="${item.name}" style="width: 100px;"></td>
+                        <td>${item.name}</td>
+                        <td>R$ ${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                    </tr>
+                `;
+            });
+
+            document.querySelector('.carrinho-table tbody').innerHTML = tabelaItens;
+            document.querySelector('.total').innerHTML = `<strong>Total Geral: R$ ${totalPreco.toFixed(2)}</strong>`;
+        })
+        .catch(error => console.error('Erro ao carregar os dados do carrinho:', error));
+    </script>
+    
+    <script src="static/script.js"></script>
+</body>
+</html>

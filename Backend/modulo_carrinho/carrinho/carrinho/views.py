@@ -1,30 +1,61 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.db import connection
-from django.db.migrations.executor import MigrationExecutor
-from django.db.utils import OperationalError
+import requests
+from django.shortcuts import redirect
 
-def status_check(request):
-    status = {
-        "database": "Unknown",
-        "migrations_pending": "Unknown",
-        "status": "OK"
-    }
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    itens = []
 
-    # Verificação da Conexão com o Banco de Dados
+    
+    for product_id, details in cart.items():
+        product = get_product_from_service(product_id)
+        itens.append({
+            'name': product['name'], 
+            'price': float(details['price']),  
+            'quantity': details['quantity'],
+            'image_url': product['image_url'],  
+        })
+
+    
+    total_preco = sum(item['price'] * item['quantity'] for item in itens)
+
+   
+    return JsonResponse({'itens': itens, 'total_preco': total_preco})
+
+def add_to_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    product = get_product_from_service(product_id)  
+
+    if product_id in cart:
+        cart[product_id]['quantity'] += 1
+    else:
+        cart[product_id] = {
+            'name': product['name'],
+            'price': str(product['price']),
+            'quantity': 1,
+        }
+
+    request.session['cart'] = cart
+    return redirect('cart_view') 
+
+
+def get_product_from_service(product_id):
     try:
-        connection.ensure_connection()
-        status["database"] = "Connected"
-    except OperationalError:
-        status["database"] = "Not Connected"
-        status["status"] = "ERROR"
-
-    # Verificação de Migrações Pendentes
-    try:
-        executor = MigrationExecutor(connection)
-        targets = executor.loader.graph.leaf_nodes()
-        status["migrations_pending"] = "No Pending Migrations" if not executor.migration_plan(targets) else "Pending Migrations"
-    except Exception as e:
-        status["migrations_pending"] = f"Error: {str(e)}"
-        status["status"] = "ERROR"
-
-    return JsonResponse(status)
+        
+        url = f"http://produtos:8000/products/{product_id}/"
+        
+     
+        response = requests.get(url)
+        
+       
+        if response.status_code == 200:
+            
+            return response.json()
+        else:
+            
+            raise Http404(f"Product with ID {product_id} not found")
+    
+    except requests.exceptions.RequestException as e:
+        
+        raise Http404(f"Error connecting to the product service: {e}")

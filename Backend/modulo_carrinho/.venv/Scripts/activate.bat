@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\workspace\BlueLockStore\Backend\modulo_carrinho\.venv
+set VIRTUAL_ENV=C:\workspace\Projeto-SD\Backend\modulo_carrinho\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 
