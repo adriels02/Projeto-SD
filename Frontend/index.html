@@ -81,7 +81,7 @@
                         </div>
                         <h3>${product.name}</h3>
                         <span>R$ ${product.price}</span>
-                        <button onclick="window.location.href='http://localhost:8001/cart/${product.id}/'">Adicionar ao Carrinho</button>
+                        <button onclick="enviarCarrinho(${product.id})">Adicionar ao carrinho</button>
                         <button onclick="comprarProduto(${product.id})">Comprar</button>
                     `;
     
@@ -126,6 +126,34 @@
             })
             .catch(error => console.error('Erro ao fazer a requisição:', error));
         }
+
+        function enviarCarrinho(productId) {
+        fetch(`cart/${productId}/`)
+            .then(response => {
+                // Verifique se a resposta é bem-sucedida
+                if (!response.ok) {
+                    throw new Error('Erro na resposta da rede');
+                }
+                return response.json();
+            })
+            .then(data => {
+               
+                if (data.success) {
+                    alert('Item adicionado ao carrinho com sucesso!');
+                } else if (data.error) {
+                    console.error('Erro ao adicionar item ao carrinho:', data.error);
+                    alert('Ocorreu um erro ao adicionar o item ao carrinho.');
+                } else {
+                    console.error('Resposta inesperada:', data);
+                    alert('Item adicionado ao carrinho.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao fazer a requisição:', error);
+                alert('Ocorreu um erro ao adicionar o item ao carrinho.');
+            });
+    }
+
     </script>
     
 </body>

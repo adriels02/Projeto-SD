@@ -5,51 +5,120 @@
     <link rel="icon" href="static/image/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="static/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
-    <title>Blue Lock | Store</title>
+    <title>Obrigado pela Compra | Blue Lock Store</title>
 </head>
 <body>
+
+<style>
+   /* Estilo para a página de agradecimento */
+.thank-you-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+    background: #f4f4f4;
+    padding: 2rem;
+}
+
+.thank-you-content {
+    text-align: center;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.thank-you-content h1 {
+    font-size: 2.5rem;
+    color: #00008b;
+    margin-bottom: 1rem;
+}
+
+.thank-you-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.thank-you-content .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background: #00008b;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+}
+
+.parabens{
+    margin-left: 180px;
+}
+
+
+.thank-you-content .btn:hover {
+    background: #ffb300;
+}
+
+.footer {
+    background: #00008b;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+
+.footer p {
+    margin: 0;
+}
+ 
+</style>
+
+
     <header class="navbar">
-    <div class="header-content">
-        <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="clicavel" id="linkParaOFinal">Contatos</li>
-                <li><a href="">Produtos</a></li>
-                <li><a href="conta.html">Conta</a></li>
-            </ul>
-        </nav>
-        <div class="nav-icon">
-            <img src="static/image/cart.png" alt="Carrinho de compras">
-            <img src="static/image/menu.png" alt="menu" class="menu-button">
+        <div class="header-content">
+            <h1 class="logo"><a href="index.html">Blue<span>Lock</span></a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                    <li><a href="">Produtos</a></li>
+                    <li><a href="conta.html">Conta</a></li>
+                </ul>
+            </nav>
+            <div class="nav-icon">
+                <img src="static/image/menu.png" alt="menu" class="menu-button">
+            </div>
         </div>
-    </div>
     </header>
 
-    <main>
-        <h1>Compra Finalizada</h1>
-        <p>Obrigado por sua compra!</p>
-        <a href="index.html">Voltar para a página inicial</a>
+    <main class="thank-you-page">
+        <div class="thank-you-content">
+            <h1 class="parabens">Parabéns!</h1>
+            <p>Sua compra foi realizada com sucesso. Estamos ansiosos para que você desfrute do seu novo item!</p>
+            <p>Continue acompanhando nossa loja para mais produtos inspirados no universo <strong>Blue Lock</strong>!</p>
+            <a href="index.html" class="btn">Voltar para a Página Inicial</a>
+        </div>
     </main>
 
     <footer class="gray-background">
         <div class="page-inner-content footer-content">
             <div class="logo-footer">
                 <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
-                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente. </p>
+                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente.</p>
             </div>
             <div class="links-footer" id="final">
                 <h3>Contatos</h3>
                 <ul class="contact-list">
-                    <li> <img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
+                    <li><img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
                     <li><img src="static/image/icon linkedin.svg" alt="Linkedin icon"><a href="https://www.linkedin.com/in/adriel-leite-15080224a/">LinkedIn</a></li>
                 </ul>
             </div>
         </div>
         <hr class="page-inner-content">
         <div class="page-inner-content copyright">
-            <p>Copyright 2024  - Todos Direitos Reservados.</p>
+            <p>Copyright 2024 - Todos Direitos Reservados.</p>
         </div>
     </footer>
 </body>

@@ -100,9 +100,9 @@
             <div class="item">
                 <h2>Detalhes do Produto</h2>
                 <div id="product-info">
-                    <!-- Informações do produto serão inseridas aqui pelo JavaScript -->
+                   
                 </div>
-                <a href="/finalizar-compra" class="finalizar-compra">Finalizar Compra</a>
+                <a href="/finalizar_compra.html" class="finalizar-compra">Finalizar Compra</a>
             </div>
         </div>
      
@@ -130,7 +130,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Ajuste a URL para a rota que fornece os dados do produto
+            
             fetch('/payment/')
                 .then(response => response.json())
                 .then(data => {
@@ -139,7 +139,7 @@
                         return;
                     }
 
-                    // Atualiza o conteúdo da página com as informações do produto
+                    
                     document.getElementById('product-info').innerHTML = `
                         <h3>${data.name}</h3>
                         <img src="static/image/${data.image_url}" alt="${data.name}" style="width: 200px;">
