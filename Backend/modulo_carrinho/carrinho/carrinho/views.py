@@ -1,45 +1,61 @@
-from django.shortcuts import render, get_object_or_404
-from produtos.models import Product
-from django.http import JsonResponse
-from django.shortcuts import render
-from .models import Compra
+from django.http import JsonResponse, Http404
+from django.db import connection
+import requests
+from django.shortcuts import redirect
+
+def cart_view(request):
+    cart = request.session.get('cart', {})
+    itens = []
+
+    
+    for product_id, details in cart.items():
+        product = get_product_from_service(product_id)
+        itens.append({
+            'name': product['name'], 
+            'price': float(details['price']),  
+            'quantity': details['quantity'],
+            'image_url': product['image_url'],  
+        })
+
+    
+    total_preco = sum(item['price'] * item['quantity'] for item in itens)
+
+   
+    return JsonResponse({'itens': itens, 'total_preco': total_preco})
+
+def add_to_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    product = get_product_from_service(product_id)  
+
+    if product_id in cart:
+        cart[product_id]['quantity'] += 1
+    else:
+        cart[product_id] = {
+            'name': product['name'],
+            'price': str(product['price']),
+            'quantity': 1,
+        }
+
+    request.session['cart'] = cart
+    return redirect('cart_view') 
 
 
-
-def carrinho_view(request):
-    # Obtém todos os itens do carrinho
-    itens = Compra.objects.all()
-
-    # Calcula o total
-    total_preco = sum(item.price * item.quantidade for item in itens)
-
-    return render(request, 'carrinho.html', {
-        'itens': itens,
-        'total_preco': total_preco,
-    })
-
-
-def adicionar_ao_carrinho(request, produto_id):
-    if request.method == 'POST':
-        produto = get_object_or_404(Product, id=produto_id)
-
-        # Suponha que o email do cliente seja passado na requisição
-        email_cliente = request.POST.get('email_cliente', '')
-
-        compra = Compra(
-            produto_id_externo=produto.id,
-            name=produto.name,
-            price=produto.price,
-            image=produto.image,
-            quantidade=1,  # Você pode ajustar a quantidade conforme necessário
-            email_cliente=email_cliente
-        )
-        compra.save()
-
-        return JsonResponse({'status': 'success', 'message': 'Produto adicionado ao carrinho'})
-    return JsonResponse({'status': 'error', 'message': 'Método não permitido'}, status=405)
-
-
-def contar_produtos(request):
-    count = Compra.objects.count()  # Contar o número de itens no carrinho
-    return JsonResponse({'count': count})
+def get_product_from_service(product_id):
+    try:
+        
+        url = f"http://produtos:8000/products/{product_id}/"
+        
+     
+        response = requests.get(url)
+        
+       
+        if response.status_code == 200:
+            
+            return response.json()
+        else:
+            
+            raise Http404(f"Product with ID {product_id} not found")
+    
+    except requests.exceptions.RequestException as e:
+        
+        raise Http404(f"Error connecting to the product service: {e}")

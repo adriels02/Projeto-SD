@@ -17,10 +17,6 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-DATABASE_ROUTERS = ['carrinho.db_routers.CompraProdutoRouter',
-                   'carrinho.db_routers.AppDatabaseRouter']
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -30,7 +26,7 @@ SECRET_KEY = 'django-insecure-e^j^m9#_ne5_67s(h_qy+k$07kf@tnyr0)q*z7e7d4vht6%+=c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:9090']
 
 
 # Application definition
@@ -44,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'carrinho',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'carrinho.urls'
@@ -83,8 +79,7 @@ TEMPLATES = [
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(
-        BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
+    os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
 ]
 
 WSGI_APPLICATION = 'carrinho.wsgi.application'
@@ -93,28 +88,10 @@ WSGI_APPLICATION = 'carrinho.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-# project_name/settings.py
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Banco de dados principal, se houver
-    },
-    'carrinho': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'modulo_produtos/produtos/db.sqlite3',
-    },
-    'produtos': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'modulo_produtos/gestao_usuarios/db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

@@ -25,9 +25,11 @@ SECRET_KEY = 'django-insecure-r!3nyxkd9_^%2$-dy$j0#or7^%2+f%-g#=d2g3&$*dkk7spy--
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:9090']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:9090',  
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,11 +59,18 @@ ROOT_URLCONF = 'pagamento.urls'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:9090",
 ]
-
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '..', '..', '..', 'Frontend')],
+        'DIRS': [os.path.join(BASE_DIR, '..', '..','Frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,7 +88,7 @@ WSGI_APPLICATION = 'pagamento.wsgi.application'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
+    os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..','..', '/Frontend'))
 ]
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

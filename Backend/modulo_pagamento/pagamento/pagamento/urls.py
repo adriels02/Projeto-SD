@@ -20,8 +20,9 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('produto/<int:id>/', views.produto_detalhes, name='produto_detalhes'),
+    path('payment/produto/<int:product_id>/', views.redirect_to_comprar, name='redirect_to_comprar'),
     path('finalizar_compra/', views.finalizar_compra_page, name='finalizar_compra_page'),
+    path('payment/', views.comprar_view, name='comprar_view'),
 ]
 
 

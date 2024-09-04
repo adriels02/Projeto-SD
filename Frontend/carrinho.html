@@ -15,7 +15,7 @@
             padding: 20px;
         }
         .main-carrinho h1 {
-            text-align: left; /* Alinha o título à esquerda */
+            text-align: left;
             margin-bottom: 20px;
         }
         .carrinho-table {
@@ -37,31 +37,30 @@
             margin-top: 20px;
         }
     </style>
-<header class="navbar">
-    <div class="header-content">
-        <h1 class="logo"><a href="index.html">Blue<span>Lock</span></a></h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li class="clicavel" id="linkParaOFinal">Contatos</li>
-                <li><a href="index.html">Produtos</a></li>
-                <li><a href="conta.html">Conta</a></li>
-            </ul>
-        </nav>
 
-        <div class="nav-icon">
-            <button><img src="static/image/cart.png" alt="Bag Icon" style="width: 24px; height: 24px;"></button>
+    <header class="navbar">
+        <div class="header-content">
+            <h1 class="logo"><a href="index.html">Blue<span>Lock</span></a></h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                    <li><a href="index.html">Produtos</a></li>
+                    <li><a href="conta.html">Conta</a></li>
+                </ul>
+            </nav>
 
-            <img src="static/image/menu.png" alt="menu" class="menu-button">
+            <div class="nav-icon">
+                <button><img src="static/image/cart.png" alt="Bag Icon" style="width: 24px; height: 24px;"></button>
+
+                <img src="static/image/menu.png" alt="menu" class="menu-button">
+            </div>
+
         </div>
+    </header>
 
-    </div>
-    
-</header>
-
-
-    <main class="main-carrinho">
-        <h1>Carrinho de Compras</h1>
+    <div class="main-carrinho">
+        <h1>Seu Carrinho</h1>
         <table class="carrinho-table">
             <thead>
                 <tr>
@@ -72,28 +71,13 @@
                 </tr>
             </thead>
             <tbody>
-                {% if itens %}
-                    {% for item in itens %}
-                        <tr>
-                            <td><img src="{{ item.image.url }}" alt="{{ item.name }}" style="width: 100px;"></td>
-                            <td>{{ item.name }}</td>
-                            <td>R$ {{ item.price|floatformat:2 }}</td>
-                            <td>{{ item.quantidade }}</td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="4">Seu carrinho está vazio.</td>
-                    </tr>
-                {% endif %}
+               
             </tbody>
         </table>
-        {% if itens %}
-            <div class="total">
-                <strong>Total Geral: R$ {{ total_preco|floatformat:2 }}</strong>
-            </div>
-        {% endif %}
-    </main>
+        <div class="total">
+            <strong>Total Geral: R$ 0,00</strong>
+        </div>
+    </div>
 
     <footer class="gray-background">
         <div class="page-inner-content footer-content">
@@ -115,6 +99,31 @@
         </div>
     </footer>
     
+    <script>
+        fetch('/cart/')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const itens = data.itens;
+            const totalPreco = data.total_preco;
+
+            let tabelaItens = '';
+            itens.forEach(item => {
+                tabelaItens += `
+                    <tr>
+                        <td><img src="static/image/${item.image_url}" alt="${item.name}" style="width: 100px;"></td>
+                        <td>${item.name}</td>
+                        <td>R$ ${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                    </tr>
+                `;
+            });
+
+            document.querySelector('.carrinho-table tbody').innerHTML = tabelaItens;
+            document.querySelector('.total').innerHTML = `<strong>Total Geral: R$ ${totalPreco.toFixed(2)}</strong>`;
+        })
+        .catch(error => console.error('Erro ao carregar os dados do carrinho:', error));
+    </script>
     
     <script src="static/script.js"></script>
 </body>

@@ -21,8 +21,10 @@
             </ul>
         </nav>
         <div class="nav-icon">
-            <img src="static/image/cart.png" alt="Carrinho de compras">
-            <img src="static/image/menu.png" alt="menu" class="menu-button">
+            <a href="carrinho.html">
+                <img src="static/image/cart.png" alt="Carrinho de compras">
+            </a>
+                <img src="static/image/menu.png" alt="menu" class="menu-button">
         </div>
     </div>
     </header>
@@ -58,22 +60,20 @@
     <div class="container">
         <div class="white-box">
             <div class="items" id="product-list">
-                <!-- Products will be injected here by JavaScript -->
+               
             </div>
         </div>
     </div>
     <script>
-        // Fetch the product data from your Django API
         fetch('/products/products/')
             .then(response => response.json())
             .then(products => {
                 const productList = document.getElementById('product-list');
-
+    
                 products.forEach(product => {
-                    // Create a new div element for each product
                     const itemDiv = document.createElement('div');
                     itemDiv.className = 'item';
-
+    
                     itemDiv.innerHTML = `
                         <div class="product new">
                             <img src="static/image/${product.image}" alt="${product.name}">
@@ -81,11 +81,10 @@
                         </div>
                         <h3>${product.name}</h3>
                         <span>R$ ${product.price}</span>
-                        <button onclick="window.location.href='/adicionar_carrinho/${product.id}/'">Adicionar ao Carrinho</button>
-                        <button onclick="window.location.href='/comprar.html?id=${product.id}'">Comprar &#8594;</button>
+                        <button onclick="window.location.href='http://localhost:8001/cart/${product.id}/'">Adicionar ao Carrinho</button>
+                        <button onclick="comprarProduto(${product.id})">Comprar</button>
                     `;
-
-                    // Append the new product element to the product list
+    
                     productList.appendChild(itemDiv);
                 });
             })
@@ -114,5 +113,20 @@
     
     
     <script src="static/script.js"></script>
+    <script>
+        function comprarProduto(productId) {
+            fetch(`payment/produto/${productId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.redirect_url) {
+                    window.location.href = data.redirect_url;
+                } else if (data.error) {
+                    console.error('Erro ao redirecionar:', data.error);
+                }
+            })
+            .catch(error => console.error('Erro ao fazer a requisição:', error));
+        }
+    </script>
+    
 </body>
 </html>
