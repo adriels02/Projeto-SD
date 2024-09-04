@@ -16,6 +16,10 @@ from django.contrib import messages
 import json
 from .forms import LoginForm , RegisterForm
 from .models import UserProfile
+import logging
+import os
+import requests
+from django.conf import settings
 
 @csrf_exempt
 def login_view(request):
@@ -41,7 +45,6 @@ def login_view(request):
     
  
     return render(request, "conta.html", {'form': form})    
-
 
 @csrf_exempt
 def register_view(request):
@@ -77,8 +80,23 @@ def register_view(request):
                     times=request.POST.get('times', 'Nenhum')
                 )
 
+                # Send notification after successful registration
+                notification_data = {
+                    'email': email,
+                    'phone': request.POST.get('telefone', ''),
+                    'message': f" {fullname}, seu cadastro em nosso site foi realizado.\n\tBluelock, 2024 !"
+                }
+
+                try:
+                    response = requests.post('http://notificacao:8000/send_notification/', json=notification_data, timeout=10)
+                    if response.status_code != 200:
+                        messages.warning(request, 'Registration successful, but failed to send notifications.')
+                except requests.exceptions.RequestException as e:
+                    logging.error(f"Failed to send notification: {e}")
+                    messages.warning(request, 'Registration successful, but failed to send notifications.')
+
                 messages.success(request, 'Cadastro realizado com sucesso.')
-                return redirect('http://localhost:9090/conta.html')  
+                return redirect('http://localhost:9090/conta.html')
         else:
             messages.error(request, 'Formulário inválido. Por favor, verifique os dados e tente novamente.')
             return render(request, 'conta.html', {'form': form})

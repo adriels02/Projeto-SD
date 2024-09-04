@@ -13,6 +13,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bluelock.ifpe.ahmk@gmail.com'
+EMAIL_HOST_PASSWORD = 'cvwj taub gnzf vddt'
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,12 +29,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-20#ueu70+0@sz@3k!ee7%^w$lsn#%-9p-=rj(f(%c@m2cbuhm*'
+SECRET_KEY = 'django-insecure-+j5r*(+o48y!s@5geluaj(l_!d-lb2np+@pon(icxb#)@l$bky'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['notificacao', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
@@ -38,13 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'notificacao'
+    
 ]
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,14 +63,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'notificacao.urls'
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:9090",
-]
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, '..', '..', '..', 'Frontend')],
+     'DIRS': [os.path.join(BASE_DIR, '..', '..', '..', 'Frontend')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,13 +78,6 @@ TEMPLATES = [
         },
     },
 ]
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.abspath(os.path.join(BASE_DIR, '..', '..', '..', 'Frontend', 'static'))
-]
-
 
 WSGI_APPLICATION = 'notificacao.wsgi.application'
 
