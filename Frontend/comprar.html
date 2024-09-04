@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="static/image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Blue Lock | Store</title>
+</head>
+<body>
+    <header class="navbar">
+    <div class="header-content">
+        <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li class="clicavel" id="linkParaOFinal">Contatos</li>
+                <li><a href="">Produtos</a></li>
+                <li><a href="conta.html">Conta</a></li>
+            </ul>
+        </nav>
+        <div class="nav-icon">
+            <img src="static/image/cart.png" alt="Carrinho de compras">
+            <img src="static/image/menu.png" alt="menu" class="menu-button">
+        </div>
+    </div>
+    </header>
+
+    <main class="purchase-page">
+        <h1>Comprar Produto</h1>
+
+        <div class="container">
+            <div class="item">
+                <h2>Detalhes do Produto</h2>
+                <div id="product-info">
+                    <h3>{{ produto.nome }}</h3>
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                    <p>Descrição: {{ produto.descricao }}</p>
+                    <p>Preço Unitário: R$ {{ produto.preco }}</p>
+                </div>
+            </div>
+        </div>
+
+        <form id="purchase-form" method="post" action="{% url 'finalizar_compra_page' %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Quantidade</legend>
+                <label for="quantity">Escolha a quantidade:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                <input type="hidden" name="produto_id" value="{{ produto.id }}">
+                <p id="total-price">Preço Total: R$ {{ produto.preco }}</p>
+            </fieldset>
+        
+            <button type="submit">Finalizar Compra</button>
+        </form>
+    </main>
+
+    <footer class="gray-background">
+        <div class="page-inner-content footer-content">
+            <div class="logo-footer">
+                <h1 class="logo"><a href="">Blue<span>Lock</span></a></h1>
+                <p>Explore nossa exclusiva coleção de camisas de times de futebol brasileiro, cuidadosamente inspirada na emocionante animação japonesa 'Blue Lock'. Nosso site, um projeto dedicado ao treino e aprimoramento em desenvolvimento web, não é apenas um destino de compras, mas uma experiência envolvente. </p>
+            </div>
+            <div class="links-footer" id="final">
+                <h3>Contatos</h3>
+                <ul class="contact-list">
+                    <li> <img src="static/image/github ícone.svg" alt="github icon"> <a href="https://github.com/adriels02">Github</a></li>
+                    <li><img src="static/image/icon linkedin.svg" alt="Linkedin icon"><a href="https://www.linkedin.com/in/adriel-leite-15080224a/">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="page-inner-content">
+        <div class="page-inner-content copyright">
+            <p>Copyright 2024  - Todos Direitos Reservados.</p>
+        </div>
+    </footer>
+
+    <form id="purchase-form" method="post" action="{% url 'finalizar_compra_page' %}">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Quantidade</legend>
+            <label for="quantity">Escolha a quantidade:</label>
+            <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+            <input type="hidden" name="produto_id" value="{{ produto.id }}">
+            <p id="total-price">Preço Total: R$ 0.00</p>
+        </fieldset>
+    
+        <button type="submit">Finalizar Compra</button>
+    </form>
+    
+</body>
+</html>
+
+
+
