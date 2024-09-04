@@ -21,7 +21,7 @@ def send_notification(request):
         # Send Email
         try:
             send_mail(
-                'Welcome!',
+                'Você Marcou Um Golaço!!! A Bluelock agradece pelo seu cadastro!',
                 message,
                 settings.EMAIL_HOST_USER,
                 [email],
